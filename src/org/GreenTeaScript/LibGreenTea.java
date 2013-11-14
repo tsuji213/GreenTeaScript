@@ -581,14 +581,17 @@ public abstract class LibGreenTea implements GreenTeaConsts {
 		else if(TargetCode.startsWith("scala")) {
 			return new ScalaSourceGenerator(TargetCode, OutputFile, GeneratorFlag);
 		}
-		else if(TargetCode.startsWith("c")) {
-			return new CSourceGenerator(TargetCode, OutputFile, GeneratorFlag);
-		}
 		else if(TargetCode.startsWith("exe")) {
 			return new JavaByteCodeGenerator(TargetCode, OutputFile, GeneratorFlag);
 		}
 		else if(TargetCode.startsWith("lisp")) {
 			return new CommonLispSourceGenerator(TargetCode, OutputFile, GeneratorFlag);
+		}
+		else if(TargetCode.startsWith("csharp")) {
+			return new CSharpSourceCodeGenerator(TargetCode, OutputFile, GeneratorFlag);
+		}
+		else if(TargetCode.startsWith("c")) {
+			return new CSourceGenerator(TargetCode, OutputFile, GeneratorFlag);
 		}
 		return null;
 	}
