@@ -62,7 +62,7 @@ public class GtSourceGenerator extends GtGenerator {
 	public GtSourceGenerator/*constructor*/(String TargetCode, String OutputFile, int GeneratorFlag) {
 		super(TargetCode, OutputFile, GeneratorFlag);
 		this.BuilderList = new ArrayList<GtSourceBuilder>();
-		this.HeaderBuilder = NewSourceBuilder();
+		this.HeaderBuilder = this.NewSourceBuilder();
 		this.VisitingBuilder = null;
 		this.LineFeed = "\n";
 		this.Tab = "   ";
@@ -115,6 +115,17 @@ public class GtSourceGenerator extends GtGenerator {
 		Builder.AppendLine("");
 	}
 
+	@Override public String GetSourceCode() {
+		String SourceCode = "";
+		for(GtSourceBuilder Builder : this.BuilderList) {
+			for(String Source : Builder.SourceList) {
+				SourceCode += Source;
+			}
+			SourceCode += "\n";
+		}
+		return SourceCode;
+	}
+
 	@Override public void FlushBuffer() {
 		LibGreenTea.WriteSource(this.OutputFile, this.BuilderList);
 		this.BuilderList.clear();
@@ -160,4 +171,18 @@ public class GtSourceGenerator extends GtGenerator {
 		return ConstValue.toString();
 	}
 
+	public void ExpandNativeMacro(String NativeMacro, ArrayList<GtNode> ParamList) {
+		/*local*/int ParamSize = LibGreenTea.ListSize(ParamList);
+		/*local*/int ParamIndex = 0;
+		/*local*/GtSourceBuilder CurrentBuilder = this.VisitingBuilder;
+		while(ParamIndex < ParamSize) {
+			this.VisitingBuilder = new GtSourceBuilder(this);
+			ParamList.get(ParamIndex).Evaluate(this);
+			/*local*/String Param = this.VisitingBuilder.toString();
+			NativeMacro = NativeMacro.replace("$" + (ParamIndex + 1), Param);
+			ParamIndex += 1;
+		}
+		this.VisitingBuilder = CurrentBuilder;
+		this.VisitingBuilder.Append(NativeMacro);
+	}
 }

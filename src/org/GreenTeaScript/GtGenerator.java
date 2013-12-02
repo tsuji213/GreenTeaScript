@@ -600,14 +600,22 @@ public class GtGenerator extends GreenTeaUtils {
 		if(Type.IsStringType()) {
 			return DShellProcess.ExecCommandString(Args);
 		}
-		else if(Type.equals(Type.IsBooleanType())) {
+		else if(Type.IsBooleanType()) {
 			return DShellProcess.ExecCommandBool(Args);
+		}
+		else if(LibGreenTea.EqualsString(Type.toString(), "Task")) {
+			return DShellProcess.ExecCommandTask(Args);
 		}
 		else {
 			DShellProcess.ExecCommandVoid(Args);
 		}
 //endif VAJA
-		return Node.ToNullValue(this.Context, EnforceConst);  // if unsupported
+		return null;
+	}
+
+	public String GetSourceCode() {
+		return null;
+		/*extension*/
 	}
 
 	public void FlushBuffer() {
@@ -626,10 +634,6 @@ public class GtGenerator extends GreenTeaUtils {
 		/*extension*/
 	}
 
-	public void SetResultValue(Object value) {
-		/*extension*/
-	}
-
 	protected void PushCode(Object Code) {
 		this.GeneratedCodeStack.add(Code);
 	}
@@ -637,7 +641,9 @@ public class GtGenerator extends GreenTeaUtils {
 	protected final Object PopCode() {
 		/*local*/int Size = this.GeneratedCodeStack.size();
 		if(Size > 0) {
-			return this.GeneratedCodeStack.remove(Size - 1);
+			Object content = this.GeneratedCodeStack.get(Size - 1);
+			this.GeneratedCodeStack.remove(Size - 1);
+			return content;
 		}
 		return "";
 	}
