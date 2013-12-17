@@ -797,6 +797,9 @@ public class LibGreenTea: GreenTeaConsts {
 		else if(TargetCode.StartsWith("X")) {
 			return "exe";
 		}
+        else if(TargetCode.StartsWith(".dll")) {
+			return "clr";
+		}
 		return TargetCode;
 	}
 
@@ -821,6 +824,9 @@ public class LibGreenTea: GreenTeaConsts {
         }
         else if(TargetCode.StartsWith("c")) {
             return new CSourceGenerator(TargetCode, OutputFile, GeneratorFlag);
+        }
+        else if(TargetCode.StartsWith("clr")) {
+            return new CLRCodeGenerator(TargetCode, OutputFile, GeneratorFlag);
         }
         //else if(TargetCode.StartsWith("exe")) {
         //    return new JavaByteCodeGenerator(TargetCode, OutputFile, GeneratorFlag);
