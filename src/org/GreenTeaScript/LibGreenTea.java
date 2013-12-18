@@ -585,9 +585,9 @@ public abstract class LibGreenTea implements GreenTeaConsts {
 			return new ScalaSourceGenerator(TargetCode, OutputFile, GeneratorFlag);
 		}
 		// FIXME CSharpSourceCodeGenerator.java is missing.
-		//else if(TargetCode.startsWith("csharp")) {
-		//	return new CSharpSourceCodeGenerator(TargetCode, OutputFile, GeneratorFlag);
-		//}
+		else if(TargetCode.startsWith("csharp")) {
+			return new CSharpSourceCodeGenerator(TargetCode, OutputFile, GeneratorFlag);
+		}
 		else if(TargetCode.startsWith("exe")) {
 			return new JavaByteCodeGenerator(TargetCode, OutputFile, GeneratorFlag);
 		}

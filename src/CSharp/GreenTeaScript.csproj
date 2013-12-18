@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BashSourceGenerator.cs" />
+    <Compile Include="CLRCodeGenerator.cs" />
     <Compile Include="CSourceGenerator.cs" />
     <Compile Include="GreenTeaArray.cs" />
     <Compile Include="GreenTeaEnum.cs" />
