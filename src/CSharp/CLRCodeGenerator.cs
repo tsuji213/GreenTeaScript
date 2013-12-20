@@ -59,7 +59,15 @@ public partial class CLRCodeGenerator: GtGenerator {
         //    x};
 
         //this.VisitIndentBlock("{", Body, "}");
-        Body.Evaluate(this);
+
+        while(Body != null) {
+			if(!this.IsEmptyBlock(Body)) {
+				Body.Evaluate(this);
+			}
+			Body = Body.NextNode;
+		}
+        //Body.Evaluate(this);
+
         var statements = CLRExpressionStack.Pop();
 
         var ReturnType = typeof(int);
@@ -82,6 +90,9 @@ public partial class CLRCodeGenerator: GtGenerator {
 	}
 
     override public void VisitReturnNode(GtReturnNode Node) {
+        CLRExpressionStack.Push(aaa);
+        Node.Expr.Evaluate(this);
+        
         //this.VisitingBuilder.Append("return");
         //if(this.DoesNodeExist(Node.Expr)){
         //    this.VisitingBuilder.Append(" ");
