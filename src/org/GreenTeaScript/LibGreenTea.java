@@ -562,6 +562,9 @@ public abstract class LibGreenTea implements GreenTeaConsts {
 		else if(Extension.endsWith(".c")) {
 			return "c";
 		}
+		else if(Extension.endsWith(".erl")) {
+			return "erl";
+		}
 		return TargetCode;
 	}
 
@@ -599,6 +602,9 @@ public abstract class LibGreenTea implements GreenTeaConsts {
 		}
 		else if(TargetCode.startsWith("minikonoha")) {
 			return new MiniKonohaSourceGenerator(TargetCode, OutputFile, GeneratorFlag);
+		}
+		else if(TargetCode.startsWith("erl")) {
+			return new ErlCodeGenerator(TargetCode, OutputFile, GeneratorFlag);
 		}
 		return null;
 	}
